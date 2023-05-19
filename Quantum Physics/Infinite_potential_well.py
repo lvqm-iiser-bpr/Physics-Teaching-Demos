@@ -3,7 +3,7 @@ import numpy as np
 from matplotlib.widgets import Slider
 import scipy.constants as const
 
-
+#Saimurali
 L = 10
 
 x = np.linspace(0,L,101)
