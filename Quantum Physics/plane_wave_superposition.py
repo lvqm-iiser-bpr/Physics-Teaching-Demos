@@ -3,7 +3,7 @@ from pylab import *
 import numpy as np
 from matplotlib.widgets import Slider
 
-
+#Saimurali
 fig = figure(figsize=(10,10))
 plt.subplots_adjust(bottom=0.25)
 
