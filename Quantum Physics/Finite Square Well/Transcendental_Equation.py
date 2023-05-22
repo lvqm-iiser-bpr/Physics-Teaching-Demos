@@ -4,7 +4,7 @@ from pylab import *
 from matplotlib.widgets import Slider,Button
 from mpmath import *
 
-
+#Saimurali
 
 """
 equation demonstrated in this code
