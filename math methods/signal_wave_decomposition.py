@@ -159,7 +159,7 @@ for i in range(sin_count):
 for i in range(cos_count):
     axis[1+sin_count + i].plot(time,amplitude_cos_print[i]*np.cos(2*np.pi*frequency_cos_print[i]*time))
     axis[1+sin_count + i].set_title(f"Cos Wave \n"
-                      f"Amplitude = {amplitude_sin_print[i]} Frequency = {frequency_sin_print[i]}")
+                      f"Amplitude = {amplitude_cos_print[i]} Frequency = {frequency_cos_print[i]}")
 
 axis[sin_count + cos_count].set_xlabel("Time")
 
