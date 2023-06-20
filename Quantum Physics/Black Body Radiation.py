@@ -1,12 +1,9 @@
+
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.widgets import Slider,Button
 from scipy.constants import h, c, k
-
-
-"custom color map"
-#classes = np.random.randint(0,3,200)
-#custom_cmap=matplotlib.colors.LinearSegmentedColormap.from_list("VIBGYOR",["violet","indigo","blue","yellow","orange","red"])
+from mpmath import mp
 
 
 """intializing Temp in Kelvin"""
@@ -21,7 +18,7 @@ b =2898e3
 lampeak= b/T            #maximum value of wavelength
 
 """ceating subplots"""
-plt.figure(figsize=(14,6.5),dpi=100)
+plt.figure(figsize=(13,6),dpi=100)
 ax=plt.subplot()
 plt.subplots_adjust(bottom=0.25)
 
@@ -32,9 +29,21 @@ plt.xlabel("wavelengths (nm)",fontsize='15')
 
 """setting value of x and y axis"""
 wl = np.arange(1e-9,6e-6,1e-8) # x axis
-intensityT = ((2.0*h*c**2)/ ( (wl**5) * (np.exp(h*c/(wl*k*T)) - 1.0) ) )
-intensityL = ((2.0*h*c**2)/ ( (wl**5) * (np.exp(h*c/(wl*k*L)) - 1.0) ) )
-intensityG = ((2.0*h*c**2)/ ( (wl**5) * (np.exp(h*c/(wl*k*G)) - 1.0) ) )
+
+"defining function"
+def Intensity(t):
+    wl = np.arange(1e-9, 6e-6, 1e-8)
+    intensityT = np.zeros_like(wl)
+    for i, w in enumerate(wl):
+        C = mp.mpf(h * c / (k * t * w))
+        intensityT[i] = mp.mpf(2.0 * h * c ** 2) / (w ** 5 * (mp.exp(C) - 1.0))
+    return intensityT
+
+
+"storing value from Intensity functions in new variables"
+intensityT = Intensity(T)
+intensityL = Intensity(L)
+intensityG = Intensity(G)
 
 """lim and ticks"""
 plt.xlim(0,3000)
@@ -68,11 +77,11 @@ plt.text(2330,15.7e13, 'Wavelenth at peak', fontsize=11,bbox = dict(facecolor = 
 
 """creating slider"""
 axT = plt.axes([0.1,0.095,0.8,0.04])                                  # axis for slider1
-sliderT = Slider(axT,'Temp A(K)',1500,8000,7000,valstep=10)           # creating slider1
+sliderT = Slider(axT,'Temp A(K)',1500,8000,valinit=7000,valstep=10)           # creating slider1
 axG = plt.axes([0.1,0.05,0.8,0.04])                                   # axis for slider2
-sliderG = Slider(axG,'Temp B(K)',1500,8000,5500,valstep=10)           # creating slider2
+sliderG = Slider(axG,'Temp B(K)',1500,8000,valinit=5500,valstep=10)           # creating slider2
 axL = plt.axes([0.1,0.01,0.8,0.04])                                   # axis for slider3
-sliderL = Slider(axL,'Temp C(K)',1500,8000,3000,valstep=10)           # creating slider3
+sliderL = Slider(axL,'Temp C(K)',1500,8000,valinit=3000,valstep=10)           # creating slider3
 
 """creating function for slider value update"""
 def update(val):
@@ -80,9 +89,9 @@ def update(val):
     T = sliderT.val
     L = sliderL.val
     G = sliderG.val
-    t.set_ydata((2.0*h*c**2)/ ( (wl**5) * (np.exp(h*c/(wl*k*T)) - 1.0) ))
-    l.set_ydata((2.0*h*c**2)/ ( (wl**5) * (np.exp(h*c/(wl*k*L)) - 1.0) ))
-    g.set_ydata((2.0*h*c**2)/ ( (wl**5) * (np.exp(h*c/(wl*k*G)) - 1.0) ))
+    t.set_ydata(Intensity(T))
+    l.set_ydata(Intensity(L))
+    g.set_ydata(Intensity(G))
 
     text1.set_visible(False)                                             #to redraw
     text2.set_visible(False)
@@ -98,7 +107,7 @@ sliderT.on_changed(update)
 sliderL.on_changed(update)
 
 """reset button"""
-reset = plt.axes([0.1, 0.15, 0.05, 0.04])
+reset = plt.axes([0.9, 0.15, 0.05, 0.04])
 button = Button(reset, 'Reset', color='gold',
                 hovercolor='red')
 
