@@ -31,9 +31,11 @@ u.set_title('WAVE1',color='red')
 u2.set_title('WAVE2',color='blue')
 
 #ylabels
-u.set_ylabel("Amplitude") #y axis label
-u2.set_ylabel("Amplitude")
-u3.set_ylabel('Amplitude')
+u.set_ylabel("y1") #y axis label
+u2.set_ylabel("y2")
+u3.set_ylabel("y(resultant)")
+#xlabels
+u3.set_xlabel("x")
 
 p=0
 p2=0
