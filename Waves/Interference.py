@@ -3,7 +3,7 @@ from matplotlib import pyplot as plt
 from matplotlib.widgets import Slider
 import matplotlib.gridspec as gridspec #import gridspec to specify the geometry of the grid to place a subplot
 fig=plt.figure() #make a figure to add subplots in it
-gs=gridspec.GridSpec(4,1) #add grid for subpolts with 2 rows 2 columns
+gs=gridspec.GridSpec(4,1) #add grid for subpolts with 4 rows 1 columns
 fig.suptitle('INTERFERENCE', fontsize=16,color='black') #title for the plot
 plt.subplots_adjust(bottom=0.3,wspace =0.3,hspace=1)  # wspace=width between subplots , hspace=height distance between subplots
 
