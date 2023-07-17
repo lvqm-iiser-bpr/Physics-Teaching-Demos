@@ -23,7 +23,7 @@ ax.set_ylabel('y', color='darkmagenta')
 plt.style.use('fivethirtyeight')
 ax.grid(True)
 plt.yticks(np.arange(-15, 16, 3))
-plt.title('A Wave in space, y = Ae$^{(kx+\phi)}$', fontstyle='oblique', color='navy')
+plt.title('A Wave in space, y = Ae$^{i(kx+\phi)}$', fontstyle='oblique', color='navy')
 
 #adjusting the main plot to make room for the sliders.
 
