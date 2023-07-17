@@ -25,7 +25,7 @@ plt.style.use('fivethirtyeight')
 ax.grid(True)
 
 plt.yticks(np.arange(-15, 16, 3))
-plt.title('A Wave in time, y = Ae$^{(iωt+Φ)}$', fontstyle='oblique', color='navy')
+plt.title('A Wave in time, y = Ae$^{i(ωt+Φ)}$', fontstyle='oblique', color='navy')
 
 
 # adjusting the main plot to make room for the sliders.
