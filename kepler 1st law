@@ -1,0 +1,60 @@
+import numpy as np
+import matplotlib.pyplot as plt
+#using slider this time for ease
+from matplotlib.widgets import Slider
+# Defining the initial orbital parameters which include axis,ecc,orbital period and angle
+a = 1.0
+# Semi-major axis measurement
+e_init = 0.5
+# Initial eccentricity of the orbit
+T = 2.0
+# Orbital period
+theta = np.linspace(0, 2*np.pi, 1000)
+# Angle range between them
+# Calculating the initial radial distance using the formula already given
+r_init = a * (1 - e_init**2) / (1 + e_init * np.cos(theta))
+# Converting all those to cartesian coordinates
+x_init = r_init * np.cos(theta)
+y_init = r_init * np.sin(theta)
+# Plotting the plot
+fig, ax = plt.subplots()
+plt.subplots_adjust(left=0.25, bottom=0.4)
+# Adjusting the position of the plots of the orbits to accommodate the slider
+# Plotting the initial orbit and naming them
+orbit, = ax.plot(x_init, y_init, 'b-', label='Planet Orbital Movement')
+sun, = ax.plot(0, 0, 'ro', label='Sun')
+# Plotting the Sun at the origin as a fixed one to be equal in all position
+ax.set_aspect('equal')
+#naming the axis
+ax.set_xlabel('X or Horizontal position of planet')
+ax.set_ylabel('Y or Vertical position of planet')
+ax.set_title('Kepler 1st Law : Law of Ellipses')
+#now to make it all function
+ax.legend()
+# Adding a slider for eccentricity(e) with already given value
+ax_eccentricity = plt.axes([0.25, 0.1, 0.5, 0.03])
+# Defining the position of the slider and putting the values
+#limiting the values from 0 to 1 only
+slider_eccentricity = Slider(ax_eccentricity, 'Eccentricity', 0, 1, valinit=e_init)
+# Updating the plot when the slider value changes accordingly with the formulas
+def update(val):
+    e = slider_eccentricity.val
+    r = a * (1 - e**2) / (1 + e * np.cos(theta))
+    x = r * np.cos(theta)
+    y = r * np.sin(theta)
+    orbit.set_data(x, y)
+    #calling the function to be in use
+    fig.canvas.draw_idle()
+#here is the main update
+slider_eccentricity.on_changed(update)
+# Move the legend to the lower right corner to be more specific
+ax.legend(loc='lower right'
+ , bbox_to_anchor=(1, 0.01))
+# Adding a text box to explain a little about the first law
+text_box = ax.text(-1.55, -0.5, "Kepler's First Law (Law of Ellipses):Unveiling celestial harmony\n\n"
+"Kepler's First Law reveals the elegant elliptical orbits of planets, where the Sun takes its place at a focal point. It is also known as the Law of Ellipses, describes the shape of planetary orbits in our solar system.\n",
+                   transform=ax.transAxes,
+                   fontsize=10,
+                   bbox=dict(facecolor= 'pink', alpha=0.8, pad=10))
+# Showing the plot
+plt.show()
